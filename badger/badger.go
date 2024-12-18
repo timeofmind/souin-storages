@@ -59,19 +59,23 @@ func Factory(badgerConfiguration core.CacheProvider, logger core.Logger, stale t
 		}
 
 		if badgerOptions.InMemory {
+
 			badgerOptions.Dir = ""
 			badgerOptions.ValueDir = ""
+      provider.logger.Debugf("Badger Options configured for in-memory: %+v", badgerOptions)
 		} else {
-			if badgerOptions.Dir == "" {
-				badgerOptions.Dir = "souin_dir"
-			}
-
+      if badgerOptions.Dir == "" {
+        logger.Error("BadgerDB requires valid Dir for file-based storage")
+        return nil, fmt.Errorf("invalid configuration: Dir is required")
+      }
 			if badgerOptions.ValueDir == "" {
 				badgerOptions.ValueDir = badgerOptions.Dir
 			}
+      provider.logger.Debugf("Badger Options configured for on-disk: %+v", badgerOptions)
 		}
 	} else if badgerConfiguration.Path == "" {
 		badgerOptions = badgerOptions.WithInMemory(true)
+    provider.logger.Debugf("Badger Options configured for in-memory: %+v", badgerOptions)
 	}
 
 	zapLogger, ok := logger.(*zap.SugaredLogger)
