@@ -1,4 +1,4 @@
-module github.com/darkweak/storages/badger
+module github.com/timeofmind/souin-storages/badger
 
 go 1.22.1
 

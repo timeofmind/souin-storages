@@ -1,4 +1,4 @@
-module github.com/darkweak/storages/badger/caddy
+module github.com/timeofmind/souin-storages/badger/caddy
 
 go 1.22.1
 
